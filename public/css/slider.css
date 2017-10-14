@@ -1,0 +1,84 @@
+h3 {
+    margin: 10px; }
+  
+  #slider {
+    height: 70vh;
+    width: 100%; }
+    #slider .btnContainer {
+      position: absolute;
+      display: flex;
+      margin: auto;
+      width: 100%;
+      height: inherit;
+      align-items: center;
+      justify-content: space-between; }
+      #slider .btnContainer .btn {
+        width: 40px;
+        height: 40px;
+        display: block;
+        border-radius: 50%;
+        background-color: #dddddd;
+        margin: 20px;
+        cursor: pointer;
+        transition: transform 300ms;
+        opacity: 0.8; }
+        #slider .btnContainer .btn:hover {
+          transform: scale(1.2); }
+        #slider .btnContainer .btn:nth-child(2n) {
+          transform: rotateY(-180deg); }
+          #slider .btnContainer .btn:nth-child(2n):hover {
+            transform: scale(1.2) rotateY(-180deg); }
+        #slider .btnContainer .btn::after {
+          content: "";
+          display: block;
+          border-radius: 50%;
+          width: 16px;
+          height: 16px;
+          margin-top: 4px;
+          background: url("../img/icons/arrow.svg"); }
+    #slider #sliderContainer {
+      display: flex;
+      flex-direction: column;
+      overflow-x: scroll;
+      overflow: hidden;
+      height: 100%;
+      flex-wrap: wrap; }
+      #slider #sliderContainer .slide {
+        height: 100%;
+        width: 100%;
+        background-position: center !important;
+        background-size: cover !important;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+    #slider .bar {
+      position: relative;
+      width: 300px;
+      height: 50px;
+      display: flex;
+      margin: auto;
+      margin-top: -50px;
+      justify-content: space-around; }
+      #slider .bar .circle {
+        width: 12px;
+        height: 12px;
+        background-color: rgba(72, 72, 72, 0.9);
+        border-radius: 50%;
+        margin: auto;
+        cursor: pointer;
+        transition: 500ms; }
+        #slider .bar .circle:hover {
+          transform: scale(1.5); }
+      #slider .bar .active::after {
+        content: "";
+        display: block;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(72, 72, 72, 0.9);
+        opacity: 0.6;
+        margin-top: -3px;
+        margin-left: -3px; 
+      }
+      #slider .bar .active:hover {
+        transform: scale(1); }
