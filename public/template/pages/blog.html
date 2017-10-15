@@ -3,22 +3,34 @@
         <div class="row align-items-center justify-content-center ">
             <div class="col text-center section">
                 <h1>Our Goal</h1>
-                <p>Lorem Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas
-                    non nisi. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec rutrum congue leo eget malesuada.
-                    Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Sed porttitor lectus nibh. Vivamus magna
-                    justo, lacinia eget consectetur sed, convallis at tellus. Vestibulum ac diam sit amet quam vehicula elementum
-                    sed sit amet dui. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus magna justo,
-                    lacinia eget consectetur sed, convallis at tellus.</p>
+                <p>Lorem Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec rutrum congue leo eget malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Sed porttitor lectus nibh. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.</p>
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-4 col-md-6" ng-repeat=" item in news">
+
+
+            <div class="col-6">
+                <div class="input-group">
+
+                    <input type="text" class="form-control" placeholder="Search in title" aria-describedby="basic-addon2" ng-model="search.title">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="search in text" aria-describedby="basic-addon2" ng-model="search.text">
+                </div>
+            </div>
+        </div>
+
+        <!--         filter: {title: title, mainText: text}    -->
+        <div class="row">
+            <div class="col-xl-4 col-md-6" ng-repeat=" item in news | filter:search.strict">
                 <div class="card" style="width: 100%; margin: 20px 0px;">
-                    <img class="card-img-top" src="http://via.placeholder.com/315x180" alt="Card image cap">
+                    <div class="card-div" style="background: url({{item.img}})"></div>
                     <div class="card-block">
                         <h4 class="card-title">{{item.title}}</h4>
                         <p class="card-text">{{item.mainText}}</p>
-                        <a href="#" class="btn btn-primary">Load more</a>
+                        <a href="#" class="btn btn-outline-primary">Load more</a>
                     </div>
                 </div>
             </div>

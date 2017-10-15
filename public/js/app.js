@@ -1,74 +1,29 @@
 var app = angular.module("app", []);
 
-app.controller("myCtrl", function ($scope) {
-
-    // Our news we paste to blog
-    $scope.news = [{
-            title: "First message",
-            mainText: "Lorem ipsum dolor sit amet consectetur  adipisicing elit. Quam sint quia recusandae nobis reiciendis repellat. Iure a perspiciatis qui perferendis."
-        },
-        {
-            title: "Second message",
-            mainText: "Lorem ipsum dolor sit amet consectetur  adipisicing elit. Quam sint quia recusandae nobis reiciendis repellat. Iure a perspiciatis qui perferendis."
-        },
-        {
-            title: "Third message",
-            mainText: "Lorem ipsum dolor sit amet consectetur  adipisicing elit. Quam sint quia recusandae nobis reiciendis repellat. Iure a perspiciatis qui perferendis."
-        },
-        {
-            title: "Third message",
-            mainText: "Lorem ipsum dolor sit amet consectetur  adipisicing elit. Quam sint quia recusandae nobis reiciendis repellat. Iure a perspiciatis qui perferendis."
-        },
-        {
-            title: "Third message",
-            mainText: "Lorem ipsum dolor sit amet consectetur  adipisicing elit. Quam sint quia recusandae nobis reiciendis repellat. Iure a perspiciatis qui perferendis."
-        },
-        {
-            title: "Third message",
-            mainText: "Lorem ipsum dolor sit amet consectetur  adipisicing elit. Quam sint quia recusandae nobis reiciendis repellat. Iure a perspiciatis qui perferendis."
-        },
-        {
-            title: "Third message",
-            mainText: "Lorem ipsum dolor sit amet consectetur  adipisicing elit. Quam sint quia recusandae nobis reiciendis repellat. Iure a perspiciatis qui perferendis."
-        },
-    ];
-});
+app.controller("myCtrl", function ($scope) {});
 
 //Connect directive
 
-//Menu html doc connect
-
-app.directive("pages", function () {
-    return {
-        replace: true,
-        templateUrl: "template/pages/pages.html",
-        controller: function () {
-
-
-
-        }
-    }
-});
-
-
-
-
+//Header
 app.directive("header", function () {
     return {
         replace: true,
         templateUrl: "template/menu.html",
-        controller: function ($scope) {
+        controller: function ($scope, $location) {
             $scope.home = true;
             $scope.blog = false;
             $scope.contact = false;
 
-            $scope.menuButtons = [{
+            $scope.menuButtons = [
+                {
                     name: "Home",
-                    action: function () {
+                    action: function ($anchorScroll) {
                         $scope.home = true;
                         $scope.blog = false;
                         $scope.contact = false;
-                    }
+
+                    },
+                    type: "nav-link"
                 },
                 {
                     name: "Blog",
@@ -76,7 +31,8 @@ app.directive("header", function () {
                         $scope.home = false;
                         $scope.blog = true;
                         $scope.contact = false;
-                    }
+                    },
+                    type: "nav-link"
                 },
                 {
                     name: "Contact",
@@ -84,12 +40,35 @@ app.directive("header", function () {
                         $scope.home = false;
                         $scope.blog = false;
                         $scope.contact = true;
-                    }
+                    },
+                    type:"nav-link"
                 },
+                {
+                    name: "Log in",
+                    action: function () {
+                        $scope.loginCard = true;
+                    },
+                    type:"btn btn-outline-success"
+                }
 
-            ]
+
+            ];
+
+            //--header visuals
+
+            var height = $("#nav-menu").height();
+            $("body").css("padding-top", height);
 
         }
+    }
+});
+
+//All out pages
+app.directive("pages", function () {
+    return {
+        replace: true,
+        templateUrl: "template/pages/pages.html",
+        controller: function () {}
     }
 });
 
@@ -105,15 +84,52 @@ app.directive("mainPage", function () {
 app.directive("blogPage", function () {
     return {
         replace: true,
-        templateUrl: "template/pages/blog.html"
+        templateUrl: "template/pages/blog.html",
+        controller: function ($scope, $http) {
+            //            Gey array of blog posts
+            $http.get("http://localhost:8000/posts")
+                .then(function successCallBack(response) {
+                    $scope.news = response.data;
+                });
+
+        }
     }
+
 });
 
 //Contact html doc connect
 app.directive("contactPage", function () {
     return {
         replace: true,
-        templateUrl: "template/pages/contact.html"
+        templateUrl: "template/pages/contact.html",
+        controller: function ($scope, $http) {
+            
+            $scope.sendEmail = function () {
+                
+                let obj = {
+                    nameSurname : $scope.nameSurname,
+                    email: $scope.email,
+                    message: $scope.message
+                }
+                
+                $http.post("http://localhost:8000/sendMessage", obj)
+                
+                    .then(function successCallBack(response) {
+                        $scope.alert = true;
+                        $scope.alert = response.data;
+                    });
+            }
+        }
+    }
+});
+
+app.directive("loginCard", function () {
+    return {
+        replace: true,
+        templateUrl: "template/pages/login.html",
+        controller: function ($scope, $http) {
+           
+        }
     }
 });
 

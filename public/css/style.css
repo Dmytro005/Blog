@@ -3,20 +3,24 @@
     src: url(../fonts/Roboto-Light.ttf);
     font-weight: 200;
 }
+
 @font-face {
     font-family: Roboto-Regular;
     src: url(../fonts/Roboto-Regular.ttf);
     font-weight: 400;
 }
+
 @font-face {
     font-family: Roboto-Light;
     src: url(../fonts/Roboto-Light.ttf);
 }
+
 @font-face {
     font-family: Roboto-Medium;
     src: url(../fonts/Roboto-Medium.ttf);
     font-weight: 500;
 }
+
 @font-face {
     font-family: Roboto-Bold;
     src: url(../fonts/Roboto-Bold.ttf);
@@ -27,72 +31,74 @@
     margin: 0;
     padding: 0;
     font-family: "Roboto-Regular", sans-serif;
+    transition: all 500ms ease-in-out;
+}
+
+body {
+    transition: padding 0s;
 }
 
 
 /* ------header */
 
-.header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: rgb(0, 0, 0);
-    transition: all 800ms, color 50ms;
-    color: white;
-    z-index: 4;
-}
-.header>ul{
-    display: flex;
-    list-style: none;
-    cursor: pointer;
-    margin: 0;
-}
-
-.header>ul>li {
-    padding:  12px 20px;
-    transition: all 500ms ease-in;
-}
-
-.header>ul>li:hover{
-    background-color: #D2D2D2;
-}
-
-.header>p{
-    margin: 0;
-}
-.active-ul {
-    /* background-color: rgb(203, 203, 203); */
-    position: fixed;
-    background-color: #FFFFFF;
+.nav-menu {
+    background-color: rgba(255, 255, 255, 1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     color: black;
 }
 
-#logo{
+#logo {
     height: 30px;
     margin: 10px;
     filter: grayscale(100%);
 }
 
+
 /* End header */
+
 
 /* Bootstrap settings */
 
-.card-block{
+.card-block {
     padding: 20px;
 }
+
+
 /* Personal settings */
 
-.section{
+.section {
     margin: 50px;
 }
 
-.goals{
+.goals {
     padding: 20px;
 }
-.goals-photo{
+
+.goals-photo {
     margin: 20px;
 }
 
+.ng-hide {
+    opacity: 0;
+    transition: all 1000ms;
+}
 
+
+/*Login Card*/
+
+#loginCard {
+    position: absolute;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.51);
+    width: 100px;
+    height: 100px;
+}
+
+
+/*Blog card responsivness*/
+
+.card-div {
+    height: 280px;
+    background-position: center !important;
+    background-size: cover !important;
+}

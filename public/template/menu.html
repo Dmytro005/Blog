@@ -1,9 +1,39 @@
-<div class="header">
-    <p>
+<!--
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid header">
+        <p>
+            <img src="../img/icons/diamond.svg" alt="" id="logo">
+            <i>My best company ever</i>
+        </p>
+        <ul>
+            <li >{{mb.name}}</li>
+        </ul>
+    </div>
+</nav>
+-->
+<nav class="navbar fixed-top navbar-expand-lg nav-menu navbar navbar-light bg-light " id="nav-menu">
+    
+    <div class="navbar-brand">
         <img src="../img/icons/diamond.svg" alt="" id="logo">
-        <i>My best company ever</i>
-    </p>
-    <ul>
-        <li ng-repeat=" mb in menuButtons" ng-click="mb.action()">{{mb.name}}</li>
-    </ul>
-</div>
+        <span>My best company ever</span>
+
+    </div>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   
+        <span class="navbar-toggler-icon"></span>
+        
+  </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav w-100 justify-content-end" >
+
+            <li ng-repeat=" mb in menuButtons" ng-click="mb.action()" class="nav-item">
+                <a class="{{mb.type}}" href="#">{{mb.name}}</a>
+            </li>
+
+        </ul>
+
+    </div>
+</nav>
