@@ -12,7 +12,7 @@ h3 {
       height: inherit;
       align-items: center;
       justify-content: space-between; }
-      #slider .btnContainer .btn {
+      #slider .btnContainer .slider-btn {
         width: 40px;
         height: 40px;
         display: block;
@@ -22,19 +22,19 @@ h3 {
         cursor: pointer;
         transition: transform 300ms;
         opacity: 0.8; }
-        #slider .btnContainer .btn:hover {
+        #slider .btnContainer .slider-btn:hover {
           transform: scale(1.2); }
-        #slider .btnContainer .btn:nth-child(2n) {
+        #slider .btnContainer .slider-btn:nth-child(2n) {
           transform: rotateY(-180deg); }
-          #slider .btnContainer .btn:nth-child(2n):hover {
+          #slider .btnContainer .slider-btn:nth-child(2n):hover {
             transform: scale(1.2) rotateY(-180deg); }
-        #slider .btnContainer .btn::after {
+        #slider .btnContainer .slider-btn::after {
           content: "";
           display: block;
           border-radius: 50%;
           width: 16px;
           height: 16px;
-          margin-top: 4px;
+          margin: 12px auto;
           background: url("../img/icons/arrow.svg"); }
     #slider #sliderContainer {
       display: flex;
@@ -69,16 +69,9 @@ h3 {
         transition: 500ms; }
         #slider .bar .circle:hover {
           transform: scale(1.5); }
-      #slider .bar .active::after {
-        content: "";
-        display: block;
-        border-radius: 50%;
-        width: 18px;
-        height: 18px;
-        border: 2px solid rgba(72, 72, 72, 0.9);
-        opacity: 0.6;
-        margin-top: -3px;
-        margin-left: -3px; 
+      #slider .bar .active {
+          padding: 2px;
+         box-shadow: 0 0 0px 3px;
       }
       #slider .bar .active:hover {
         transform: scale(1); }

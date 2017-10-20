@@ -18,18 +18,18 @@
                 </div>
             </div>
 
-            <form name="messageForm" novalidate>
+            <form name="messageForm" novalidate ng-show="contactForm">
                 <div class="form-group">
 
                     <label for="example-text-input" class="col-form-label">Name and Surname</label>
 
 
-                    <input class="form-control" type="text" name="nameSurname" ng-model="nameSurname" required>
+                    <input class="form-control" type="text" name="nameSurname" ng-model="nameSurname" placeholder="John" required>
 
 
                     <span ng-show="messageForm.nameSurname.$touched && messageForm.nameSurname.$invalid">
                         
-            <span class="badge alert-danger w-100" ng-show="messageForm.nameSurname.$error.required" >{{messageForm.nameSurname.$error}}</span>
+            <span class="badge alert-danger w-100" ng-show="messageForm.nameSurname.$error.required" >Name and Surname are required</span>
                     </span>
 
 
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label for="exampleTextarea">Message</label>
 
-                    <textarea class="form-control" id="exampleTextarea" rows="3" ng-model="message" name="message" required></textarea>
+                    <textarea class="form-control" id="exampleTextarea" rows="3" ng-model="message" name="message" placeholder="Type your messasge" required></textarea>
                     
                     <span ng-show="messageForm.message.$touched && messageForm.message.$invalid">
                         

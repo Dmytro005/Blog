@@ -6,34 +6,70 @@
                 <p>Lorem Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec rutrum congue leo eget malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Sed porttitor lectus nibh. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row align-items-center justify-content-center ">
 
 
             <div class="col-6">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" placeholder="Search in title" aria-describedby="basic-addon2" ng-model="search.title">
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="search in text" aria-describedby="basic-addon2" ng-model="search.text">
+                    <input type="text" class="form-control" placeholder="Search article" aria-describedby="basic-addon2" ng-model="query">
+                    <span class="input-group-addon" id="btnGroupAddon2">
+                        Search
+                    </span>
                 </div>
             </div>
         </div>
 
-        <!--         filter: {title: title, mainText: text}    -->
-        <div class="row">
-            <div class="col-xl-4 col-md-6" ng-repeat=" item in news | filter:search.strict">
-                <div class="card" style="width: 100%; margin: 20px 0px;">
+        <!--             -->
+        <div class="row align-items-center justify-content-center">
+            <div class="card-columns  ">
+
+                <div class="card animate-repeat" style="width: 100%; margin: 20px 0px;" ng-repeat=" item in news | filter: query as results">
+
                     <div class="card-div" style="background: url({{item.img}})"></div>
+
                     <div class="card-block">
                         <h4 class="card-title">{{item.title}}</h4>
                         <p class="card-text">{{item.mainText}}</p>
                         <a href="#" class="btn btn-outline-primary">Load more</a>
                     </div>
+
+                    <div class="card-footer">
+                        <small class="text-muted">11:22:00</small>
+                    </div>
+
                 </div>
+
             </div>
+            <div class="col-6 animate-repeat" ng-if="results.length === 0">
+                <div class="alert alert-danger text-center">Nothing have been found</div>
+            </div>
+
+
         </div>
+
     </div>
 </div>
+
+
+
+<!--
+<div ng-controller="repeatController">
+ 
+  I have {{friends.length}} friends. They are:
+  
+  <input type="search" ng-model="q" placeholder="filter friends..." aria-label="filter friends" />
+  
+  <ul class="example-animate-container">
+   
+    <li class="animate-repeat" ng-repeat="friend in friends | filter:q as results">
+      [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
+    </li>
+    
+    <li class="animate-repeat" ng-if="results.length === 0">
+      <strong>No results found...</strong>
+    </li>
+    
+  </ul>
+</div>
+-->

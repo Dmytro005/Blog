@@ -1,4 +1,4 @@
-var app = angular.module("app", []);
+var app = angular.module("app", ["ngAnimate"]);
 
 app.controller("myCtrl", function ($scope) {});
 
@@ -41,14 +41,12 @@ app.directive("header", function () {
                         $scope.blog = false;
                         $scope.contact = true;
                     },
-                    type:"nav-link"
+                    type: "nav-link"
                 },
                 {
                     name: "Log in",
-                    action: function () {
-                        $scope.loginCard = true;
-                    },
-                    type:"btn btn-outline-success"
+                    type: "btn btn-outline-success",
+                    modal: "login"
                 }
 
 
@@ -58,6 +56,8 @@ app.directive("header", function () {
 
             var height = $("#nav-menu").height();
             $("body").css("padding-top", height);
+
+
 
         }
     }
@@ -103,19 +103,20 @@ app.directive("contactPage", function () {
         replace: true,
         templateUrl: "template/pages/contact.html",
         controller: function ($scope, $http) {
-            
+            $scope.contactForm = true;
             $scope.sendEmail = function () {
-                
+
                 let obj = {
-                    nameSurname : $scope.nameSurname,
+                    nameSurname: $scope.nameSurname,
                     email: $scope.email,
                     message: $scope.message
                 }
-                
+
                 $http.post("http://localhost:8000/sendMessage", obj)
-                
+
                     .then(function successCallBack(response) {
                         $scope.alert = true;
+                        $scope.contactForm = false;
                         $scope.alert = response.data;
                     });
             }
@@ -127,8 +128,33 @@ app.directive("loginCard", function () {
     return {
         replace: true,
         templateUrl: "template/pages/login.html",
-        controller: function ($scope, $http) {
-           
+        controller: function ($scope) {
+            $scope.singUpForm = true;
+            
+            $scope.singUpUser = function () {
+                let Obj = {
+                    name: $scope.nick,
+                    email: $scope.email,
+                    pass: $scope.pass
+                }
+                console.log($scope.NickName);
+                
+                $scope.singUpForm = false;
+                $scope.singUpAlert = true;
+                $scope.singUpAlertMessage = "Bye";
+                
+                setTimeout(function(){
+                   var inst = $('[data-remodal-id=login]').remodal();
+                    inst.close();
+                },2000)
+            }
+
+            //Disable remodal initialization on page load becuse of using directive
+            $('.remodal').remodal({
+                hashTracking: false
+            });
+
+
         }
     }
 });
@@ -141,7 +167,7 @@ app.directive("slider", function () {
         controller: function () {
             $(function () {
                 var slideDelay = 4500;
-                var animDuration = 1800;
+                var animDuration = 2000;
 
                 var currentSlide = 1;
                 var width = $("#slider").width();
@@ -186,7 +212,7 @@ app.directive("slider", function () {
                 function scrollToCurrent() {
                     $("#sliderContainer").animate({ //scroll previous
                         scrollLeft: width * currentSlide
-                    }, 700);
+                    }, animDuration / 2);
                 }
 
                 //-----return slidet to first slide
@@ -195,7 +221,7 @@ app.directive("slider", function () {
                         currentSlide = 1;
                         $("#sliderContainer").animate({
                             scrollLeft: 0
-                        }, 1000);
+                        }, animDuration / 2);
                     }
                 }
 
@@ -223,9 +249,10 @@ app.directive("slider", function () {
                     ++currentSlide;
 
                     circleActivate();
+
                     $("#sliderContainer").animate({ //scroll previous
                         scrollLeft: "+=" + width
-                    }, animDuration);
+                    }, animDuration, "swing");
 
                     if (currentSlide > lastSlide) {
                         toFirstSlide();
@@ -250,7 +277,7 @@ app.directive("slider", function () {
                         circleActivate();
                     }
                     play();
-                    console.log(currentSlide);
+                    //                    console.log(currentSlide);
 
                 }
 
@@ -273,31 +300,13 @@ app.directive("slider", function () {
                 })
 
                 //----buttons previous and next event handler
-                $(".btn").click(function () {
+                $(".slider-btn").click(function () {
                     if ($(this).attr("id") == "next") {
                         nextSlide();
                     } else {
                         prevSlide();
                     }
                 });
-
-                //----key work;
-                $("body").keydown(function (e) {
-                    if (e.keyCode == 37) { // left
-                        prevSlide();
-                    } else if (e.keyCode == 39) { // right
-                        nextSlide();
-                    }
-                });
-
-                //    $("#slider").mouseenter(function () {
-                //            stop();
-                //            console.log("enter");
-                //        })
-                //        .mouseleave(function () {
-                //            console.log("leave");
-                //            play();
-                //        });
 
                 //-----activate autoplay
                 play();

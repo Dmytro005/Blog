@@ -35,7 +35,7 @@
 }
 
 body {
-    transition: padding 0s;
+    /*    transition: padding 0s;*/
 }
 
 
@@ -80,25 +80,77 @@ body {
 
 .ng-hide {
     opacity: 0;
-    transition: all 1000ms;
+    transition: all 500ms;
 }
 
 
-/*Login Card*/
+/*Login Card div-background*/
 
 #loginCard {
     position: absolute;
     margin: 0 auto;
+    position: absolute;
+    top: 0;
     background-color: rgba(0, 0, 0, 0.51);
     width: 100px;
     height: 100px;
 }
 
 
-/*Blog card responsivness*/
+/*NG animation*/
 
 .card-div {
     height: 280px;
     background-position: center !important;
     background-size: cover !important;
 }
+
+.example-animate-container {
+    background: white;
+    border: 1px solid black;
+    list-style: none;
+    margin: 0;
+    padding: 0 10px;
+}
+
+.animate-repeat {
+    line-height: 30px;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(5px);
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+}
+
+@media (min-width: 576px) and (max-width: 767px) { 
+    .card-columns{
+            column-count: 2;
+        }
+}
+
+/*Remodal*/
+
+#LogIn{
+    max-width: 400px ;
+}
+    
+

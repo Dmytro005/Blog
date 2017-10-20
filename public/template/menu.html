@@ -30,10 +30,12 @@
         <ul class="navbar-nav w-100 justify-content-end" >
 
             <li ng-repeat=" mb in menuButtons" ng-click="mb.action()" class="nav-item">
-                <a class="{{mb.type}}" href="#">{{mb.name}}</a>
+                <a class="{{mb.type}}" ng-hide="mb.modal" href="#">{{mb.name}}</a>
+                
+                <a ng-if="mb.modal" data-remodal-target="{{mb.modal}}" class="{{mb.type}}" href="#">{{mb.name}}</a>
             </li>
 
         </ul>
-
+       
     </div>
 </nav>

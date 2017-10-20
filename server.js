@@ -57,7 +57,7 @@ app.get("/posts", function (req, res) {
 
 app.post("/sendMessage", function(req,res){
     console.log(req.body);
-   res.status(200).send("Server request");
+   res.status(200).send("Form has been sent successfully");
     
 });
 
