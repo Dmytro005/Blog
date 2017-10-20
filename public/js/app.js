@@ -44,9 +44,14 @@ app.directive("header", function () {
                     type: "nav-link"
                 },
                 {
-                    name: "Log in",
+                    name: "Sing Up",
                     type: "btn btn-outline-success",
-                    modal: "login"
+                    modal: "singUp"
+                },
+                {
+                    name: "Sing In",
+                    type: "btn btn-outline-primary",
+                    modal: "singIn"
                 }
 
 
@@ -124,29 +129,95 @@ app.directive("contactPage", function () {
     }
 });
 
-app.directive("loginCard", function () {
+app.directive("singUp", function () {
     return {
         replace: true,
-        templateUrl: "template/pages/login.html",
-        controller: function ($scope) {
+        templateUrl: "template/modals/singUp.html",
+        controller: function ($scope, $http) {
             $scope.singUpForm = true;
             
+            //For remodal close and open
+            var SingUpModal = $('[data-remodal-id=singUp]').remodal();
+            
+            //Form style adding on close
+            var SingUpStyle = $('[data-remodal-id=singUp]');
+
             $scope.singUpUser = function () {
                 let Obj = {
-                    name: $scope.nick,
-                    email: $scope.email,
-                    pass: $scope.pass
+                    login: $scope.SingUpLogin,
+                    info: $scope.SingUpEmail,
+                    password: $scope.SingUpPass
                 }
-                console.log($scope.NickName);
                 
+                //Hide form
                 $scope.singUpForm = false;
+                //Show allert
                 $scope.singUpAlert = true;
-                $scope.singUpAlertMessage = "Bye";
-                
-                setTimeout(function(){
-                   var inst = $('[data-remodal-id=login]').remodal();
-                    inst.close();
-                },2000)
+
+                $http.post("http://localhost:8000/singUp", Obj).then(function successfullCallBack(response) {
+                    SingUpStyle.addClass(" alert alert-success");
+                    $scope.singUpAlertMessage = response.data;
+                });
+
+                setTimeout(function () {
+                    
+                    SingUpModal.close();
+                    SingUpStyle.removeClass("alert alert-success");
+                    
+                    //Show form
+                    $scope.singUpForm = true;
+                    //Hide form
+                    $scope.singUpAlert = false;
+                }, 2500)
+
+            }
+
+            //Disable remodal initialization on page load becuse of using directive
+            $('.remodal').remodal({
+                hashTracking: false
+            });
+
+
+        }
+    }
+});
+
+app.directive("singIn", function () {
+    return {
+        replace: true,
+        templateUrl: "template/modals/singIn.html",
+        controller: function ($scope, $http) {
+            $scope.singInForm = true;
+            
+            var SingInModal = $('[data-remodal-id=singIn]').remodal();
+                    
+            var SingInStyles = $('[data-remodal-id=singIn]');
+            
+            $scope.singInUser = function () {
+                let Obj = {
+                    login: $scope.SingInLogin,
+                    password: $scope.SingInPass
+                }
+                console.log(Obj);
+
+                $scope.singInForm = false;
+                $scope.singInAlert = true;
+                $scope.singInAlertMessage = "Bye";
+
+                $http.post("http://localhost:8000/singIn", Obj).then(function successfullCallBack(response) {
+                    SingInStyles.addClass("alert alert-primary")
+                    $scope.singInAlertMessage = response.data;
+                });
+
+                setTimeout(function () {
+                    SingInStyles.removeClass("alert alert-primary")
+
+                    SingInModal.close();
+                    
+                    $scope.singInForm = true;
+                    $scope.singInAlert = false;
+                }, 2000)
+
             }
 
             //Disable remodal initialization on page load becuse of using directive

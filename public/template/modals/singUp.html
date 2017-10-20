@@ -1,0 +1,64 @@
+<div class="remodal my-modal" data-remodal-id="singUp">
+        <div class="container justify-content-center">
+            <div class="alert alert-success col-6 text-center" ng-show="singUpAlert" id="sing-up-alert">
+                {{singUpAlertMessage}}
+            </div>
+        </div>
+
+        <form name="singUp" novalidate ng-show="singUpForm">
+        <h2>Sing Up</h2>
+        <small>Subscribe for new posts and events in your blog</small>
+<!--            SingUpLogin input-->
+                <div class="form-group">
+
+                <label for="example-text-input" class="col-form-label">Login name</label>
+
+
+                <input class="form-control" type="text" name="SingUpLogin" ng-model="SingUpLogin" placeholder="John" required>
+
+
+                <span ng-show="singUp.SingUpLogin.$touched && singUp.SingUpLogin.$invalid">
+                        
+            <span class="badge alert-danger w-100" ng-show="singUp.SingUpLogin.$error.required" >SingUpLogin name are required</span>
+                </span>
+
+
+            </div>
+<!--SingUpEmail input-->
+            <div class="form-group">
+                <label for="exampleInputSingUpEmail1">SingUpEmail</label>
+
+                <input type="SingUpEmail" class="form-control" id="exampleInputSingUpEmail1" aria-placeholder="Enter email" ng-model="SingUpEmail" name="SingUpEmail" required>
+
+                <small id="SingUpEmailHelp" class="form-text text-muted">We'll never share your SingUpEmail with anyone else.</small>
+
+                <span ng-show="singUp.SingUpEmail.$touched && singUp.SingUpEmail.$invalid">
+                        
+            <span class="badge alert-danger w-100" ng-show="singUp.SingUpEmail.$error.required">Invalid SingUpEmail</span>
+                </span>
+            </div>
+<!--            SingInSingUpPassword-->
+<div class="form-group">
+                <label for="SingInSingUpPass">Password</label>
+
+                <input  class="form-control" placeholder="Enter SingUpPassword" ng-model="SingUpPass" name="SingUpPass" required>
+
+                <span ng-show="singUp.SingUpPass.$touched && singUp.SingUpPass.$invalid">
+                        
+            <span class="badge alert-danger w-100" ng-show="singUp.SingUpPass.$error.required">Invalid SingUpEmail</span>
+                </span>
+            </div>
+<!--Butons-->
+           
+            <div class="row">
+                <div class="col-6">
+            <button data-remodal-action="cancel" class="btn btn-outline-danger w-100">Cancel</button>
+                    
+                </div>
+                <div class="col-6">
+            <button type="button" class="btn btn-success w-100" ng-disabled="singUp.$invalid" ng-click="singUpUser()" ng-model="singUpForm">Sing Up</button>
+                </div>
+            </div>
+        </form>
+    </div>
+

@@ -149,8 +149,14 @@ body {
 
 /*Remodal*/
 
-#LogIn{
-    max-width: 400px ;
+.my-modal{
+    max-width: 350px !important;
 }
-    
 
+#sing-up-alert{
+    min-width: 100%;
+    margin: 0;
+}
+.my-btn{
+/* margin: 5px;   */
+}
