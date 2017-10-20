@@ -21,31 +21,33 @@
         </div>
 
         <!--             -->
-        <div class="row align-items-center justify-content-center">
-            <div class="card-columns  ">
+        <div class="row justify-content-center">
+            <div class="col-xl-4 col-md-6 animate-repeat" ng-repeat=" item in posts | filter: query as results">
 
-                <div class="card animate-repeat" style="width: 100%; margin: 20px 0px;" ng-repeat=" item in news | filter: query as results">
 
-                    <div class="card-div" style="background: url({{item.img}})"></div>
+                <div class="card " style="width: 100%; margin: 20px 0px;">
+
+                    <div class="card-div" style="background: url({{item.title_photo}})"></div>
 
                     <div class="card-block">
                         <h4 class="card-title">{{item.title}}</h4>
-                        <p class="card-text">{{item.mainText}}</p>
-                        <a href="#" class="btn btn-outline-primary">Load more</a>
+                        <p class="card-text">{{item.preview_text}}</p>
                     </div>
 
-                    <div class="card-footer">
+                    <div class="card-footer d-flex justify-content-between">
                         <small class="text-muted">11:22:00</small>
+                        <div>
+                           <small class="primary">{{item.id}}</small>
+                            <img class="heartIcon" src="../../img/icons/heart.svg" alt="" ng-show="heartIcon">
+                            <a href="#" ng-click="readMore(item.id)" class="btn btn-outline-primary">Load more</a>
+                        </div>
                     </div>
 
                 </div>
-
             </div>
             <div class="col-6 animate-repeat" ng-if="results.length === 0">
                 <div class="alert alert-danger text-center">Nothing have been found</div>
             </div>
-
-
         </div>
 
     </div>

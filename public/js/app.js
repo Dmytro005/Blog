@@ -17,10 +17,11 @@ app.directive("header", function () {
             $scope.menuButtons = [
                 {
                     name: "Home",
-                    action: function ($anchorScroll) {
+                    action: function () {
                         $scope.home = true;
                         $scope.blog = false;
                         $scope.contact = false;
+                        $scope.postPage = false;
 
                     },
                     type: "nav-link"
@@ -31,6 +32,7 @@ app.directive("header", function () {
                         $scope.home = false;
                         $scope.blog = true;
                         $scope.contact = false;
+                        $scope.postPage = false;
                     },
                     type: "nav-link"
                 },
@@ -40,6 +42,7 @@ app.directive("header", function () {
                         $scope.home = false;
                         $scope.blog = false;
                         $scope.contact = true;
+                        $scope.postPage = false;
                     },
                     type: "nav-link"
                 },
@@ -51,7 +54,8 @@ app.directive("header", function () {
                 {
                     name: "Sing In",
                     type: "btn btn-outline-primary",
-                    modal: "singIn"
+                    modal: "singIn",
+
                 }
 
 
@@ -60,7 +64,7 @@ app.directive("header", function () {
             //--header visuals
 
             var height = $("#nav-menu").height();
-            $("body").css("padding-top", height);
+            $("body").css("padding-top", height * 1.4);
 
 
 
@@ -94,12 +98,47 @@ app.directive("blogPage", function () {
             //            Gey array of blog posts
             $http.get("http://localhost:8000/posts")
                 .then(function successCallBack(response) {
-                    $scope.news = response.data;
+                    $scope.posts = response.data;
                 });
-
         }
     }
+});
 
+app.directive("postPage", function () {
+    return {
+        replace: true,
+        templateUrl: "template/pages/post.html",
+        controller: function ($scope, $http) {
+
+            $scope.postPage = false;
+
+            $scope.readMore = function (id) {
+
+                let postId = {
+                    id: id
+                };
+
+                //                console.log(postId);
+
+                $http.post("http://localhost:8000/post", postId)
+                    .then(function successCallBack(response) {
+
+                        $scope.postPage = true;
+                        $scope.blog = false;
+
+                        //                        console.log(response.data);
+
+                        $scope.postTitle = response.data[0].title;
+
+                        $scope.postPhoto = response.data[0].title_photo;
+
+                        $scope.postFullText = response.data[0].full_text;
+                        
+                        $("body").scrollTop(0);
+                    });
+            }
+        }
+    }
 });
 
 //Contact html doc connect
@@ -135,10 +174,10 @@ app.directive("singUp", function () {
         templateUrl: "template/modals/singUp.html",
         controller: function ($scope, $http) {
             $scope.singUpForm = true;
-            
+
             //For remodal close and open
             var SingUpModal = $('[data-remodal-id=singUp]').remodal();
-            
+
             //Form style adding on close
             var SingUpStyle = $('[data-remodal-id=singUp]');
 
@@ -148,7 +187,7 @@ app.directive("singUp", function () {
                     info: $scope.SingUpEmail,
                     password: $scope.SingUpPass
                 }
-                
+
                 //Hide form
                 $scope.singUpForm = false;
                 //Show allert
@@ -160,10 +199,10 @@ app.directive("singUp", function () {
                 });
 
                 setTimeout(function () {
-                    
+
                     SingUpModal.close();
                     SingUpStyle.removeClass("alert alert-success");
-                    
+
                     //Show form
                     $scope.singUpForm = true;
                     //Hide form
@@ -188,17 +227,19 @@ app.directive("singIn", function () {
         templateUrl: "template/modals/singIn.html",
         controller: function ($scope, $http) {
             $scope.singInForm = true;
-            
+
             var SingInModal = $('[data-remodal-id=singIn]').remodal();
-                    
+
             var SingInStyles = $('[data-remodal-id=singIn]');
-            
+
+            $scope.UserName = "Guest"
+            $scope.heartIcon = false;
+
             $scope.singInUser = function () {
                 let Obj = {
                     login: $scope.SingInLogin,
                     password: $scope.SingInPass
                 }
-                console.log(Obj);
 
                 $scope.singInForm = false;
                 $scope.singInAlert = true;
@@ -206,18 +247,33 @@ app.directive("singIn", function () {
 
                 $http.post("http://localhost:8000/singIn", Obj).then(function successfullCallBack(response) {
                     SingInStyles.addClass("alert alert-primary")
-                    $scope.singInAlertMessage = response.data;
+
+                    $scope.singInAlertMessage = response.data.message;
+
+                    //                    console.log(response.data.userLogin)
+
+                    setTimeout(function () {
+                        SingInStyles.removeClass("alert alert-primary")
+
+                        SingInModal.close();
+
+                        $scope.singInForm = true;
+                        $scope.singInAlert = false;
+                        
+                        $scope.heartIcon = true;
+                
+                    }, 2000);
+                    
+                    $scope.UserName = response.data.userLogin || "Guest" ;
+                    
                 });
 
-                setTimeout(function () {
-                    SingInStyles.removeClass("alert alert-primary")
 
-                    SingInModal.close();
-                    
-                    $scope.singInForm = true;
-                    $scope.singInAlert = false;
-                }, 2000)
-
+            }
+            
+            $scope.logOut = function(){
+                $scope.UserName = "Guest";
+                $scope.heartIcon = false;
             }
 
             //Disable remodal initialization on page load becuse of using directive

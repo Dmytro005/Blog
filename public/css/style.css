@@ -59,9 +59,6 @@ body {
 
 /* Bootstrap settings */
 
-.card-block {
-    padding: 20px;
-}
 
 
 /* Personal settings */
@@ -95,7 +92,9 @@ body {
     width: 100px;
     height: 100px;
 }
-
+.card-block {
+    padding: 20px;
+}
 
 /*NG animation*/
 
@@ -158,5 +157,11 @@ body {
     margin: 0;
 }
 .my-btn{
-/* margin: 5px;   */
+ margin: 0 5px;   
+}
+
+.heartIcon{
+    height: 30px;
+    width: 30px;
+    padding: 5px;
 }
