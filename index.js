@@ -67,7 +67,9 @@ app.post("/singIn", function (req, res) {
                     {
                     message: "Welcome",
                     userLogin: rows[0].login,
-                    userId: rows[0].password
+                    userId: rows[0].password,
+                    userInfo: rows[0].info,
+                    signed: true
                     }
                 );
             } else {

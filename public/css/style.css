@@ -150,6 +150,7 @@ body {
 
 .my-modal{
     max-width: 350px !important;
+    border-radius: 5px;
 }
 
 #sing-up-alert{

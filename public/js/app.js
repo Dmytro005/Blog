@@ -18,31 +18,22 @@ app.directive("header", function () {
                 {
                     name: "Home",
                     action: function () {
-                        $scope.home = true;
-                        $scope.blog = false;
-                        $scope.contact = false;
-                        $scope.postPage = false;
 
+                        $scope.pageSwitch(this.name);
                     },
                     type: "nav-link"
                 },
                 {
                     name: "Blog",
                     action: function () {
-                        $scope.home = false;
-                        $scope.blog = true;
-                        $scope.contact = false;
-                        $scope.postPage = false;
+                        $scope.pageSwitch(this.name);
                     },
                     type: "nav-link"
                 },
                 {
                     name: "Contact",
                     action: function () {
-                        $scope.home = false;
-                        $scope.blog = false;
-                        $scope.contact = true;
-                        $scope.postPage = false;
+                        $scope.pageSwitch(this.name);
                     },
                     type: "nav-link"
                 },
@@ -56,15 +47,42 @@ app.directive("header", function () {
                     type: "btn btn-outline-primary",
                     modal: "singIn",
 
+                },
+                {
+                    /*For triggering hide and show with other pages*/
+                    name: "PostPage",
+                    type: "d-none",
                 }
 
 
             ];
 
-            //--header visuals
+
+            //Switch page throught pocesing the massive and enable current page
+            $scope.pageSwitch = function (page) {
+
+                var buttons = $scope.menuButtons;
+
+                let switchPage = page;
+
+                //              console.log(switchPage);
+
+                for (var i = 0; i < buttons.length; i++) {
+                    if (switchPage === buttons[i].name) {
+                        let scopePage = buttons[i].name.toLowerCase();
+                        $scope[scopePage] = true;
+                    } else {
+                        let scopePage = buttons[i].name.toLowerCase();
+                        $scope[scopePage] = false;
+                    }
+                }
+            }
+
+
+            //--header visuals add padding because header is fixed
 
             var height = $("#nav-menu").height();
-            $("body").css("padding-top", height * 1.4);
+            $("body").css("padding-top", height * 1.1);
 
 
 
@@ -123,8 +141,7 @@ app.directive("postPage", function () {
                 $http.post("http://localhost:8000/post", postId)
                     .then(function successCallBack(response) {
 
-                        $scope.postPage = true;
-                        $scope.blog = false;
+                        $scope.pageSwitch("PostPage");
 
                         //                        console.log(response.data);
 
@@ -133,7 +150,7 @@ app.directive("postPage", function () {
                         $scope.postPhoto = response.data[0].title_photo;
 
                         $scope.postFullText = response.data[0].full_text;
-                        
+
                         $("body").scrollTop(0);
                     });
             }
@@ -228,12 +245,17 @@ app.directive("singIn", function () {
         controller: function ($scope, $http) {
             $scope.singInForm = true;
 
+            /*Initialize the modal block*/
             var SingInModal = $('[data-remodal-id=singIn]').remodal();
 
             var SingInStyles = $('[data-remodal-id=singIn]');
-
-            $scope.UserName = "Guest"
+            var AlertSytles = $("#sing-in-alert");
+            
+            $scope.CurentUser = {
+                name: "Guest"
+            }
             $scope.heartIcon = false;
+
 
             $scope.singInUser = function () {
                 let Obj = {
@@ -243,36 +265,53 @@ app.directive("singIn", function () {
 
                 $scope.singInForm = false;
                 $scope.singInAlert = true;
-                $scope.singInAlertMessage = "Bye";
+
 
                 $http.post("http://localhost:8000/singIn", Obj).then(function successfullCallBack(response) {
-                    SingInStyles.addClass("alert alert-primary")
+                    /*Change styles and close*/
+                    //                    SingInStyles.addClass("alert alert-danger");
 
                     $scope.singInAlertMessage = response.data.message;
 
                     //                    console.log(response.data.userLogin)
 
-                    setTimeout(function () {
-                        SingInStyles.removeClass("alert alert-primary")
-
-                        SingInModal.close();
-
-                        $scope.singInForm = true;
-                        $scope.singInAlert = false;
+                    /*Close modal*/
+                    if (response.data.signed) {
                         
+                        AlertSytles.removeClass("alert-danger");
+                        
+                        AlertSytles.addClass("alert-primary");
+                        
+                        SingInStyles.addClass("alert-primary");
+
+                        $scope.singInAlertMessage += " " + response.data.userLogin;
+
                         $scope.heartIcon = true;
-                
-                    }, 2000);
-                    
-                    $scope.UserName = response.data.userLogin || "Guest" ;
-                    
+                        
+                        setTimeout(function () {
+
+                            $("[data-remodal-target= singIn]").addClass("d-none");
+                            
+                            $("[data-remodal-target= singUp]").addClass("d-none");
+
+                            SingInModal.close();
+
+                        }, 2000);
+
+                    } else {
+                        $scope.singInForm = true;
+                    }
+
+                    /*Change user name*/
+                    $scope.CurentUser.name = response.data.userLogin || "Guest";
+
                 });
 
 
             }
-            
-            $scope.logOut = function(){
-                $scope.UserName = "Guest";
+
+            $scope.logOut = function () {
+                $scope.CurentUser.name = "Guest";
                 $scope.heartIcon = false;
             }
 
