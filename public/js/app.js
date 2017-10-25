@@ -151,7 +151,9 @@ app.directive("postPage", function () {
 
                         $scope.postFullText = response.data[0].full_text;
 
-                        $("body").scrollTop(0);
+                        $(window).scrollTop(0);
+                        $scope.blogScroll
+                        console.log($(window).scrollTop());
                     });
             }
         }
