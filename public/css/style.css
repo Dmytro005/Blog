@@ -56,10 +56,7 @@ body {
 
 /* End header */
 
-
 /* Bootstrap settings */
-
-
 
 /* Personal settings */
 
@@ -92,6 +89,7 @@ body {
     width: 100px;
     height: 100px;
 }
+
 .card-block {
     padding: 20px;
 }
@@ -140,29 +138,57 @@ body {
     filter: blur(0px);
 }
 
-@media (min-width: 576px) and (max-width: 767px) { 
-    .card-columns{
-            column-count: 2;
-        }
+@media (min-width: 576px) and (max-width: 767px) {
+    .card-columns {
+        column-count: 2;
+    }
 }
 
 /*Remodal*/
 
-.my-modal{
+.my-modal {
     max-width: 350px !important;
     border-radius: 5px;
 }
 
-#sing-up-alert{
+#sing-up-alert {
     min-width: 100%;
     margin: 0;
 }
-.my-btn{
- margin: 0 5px;   
+
+.my-btn {
+    margin: 0 5px;
 }
 
-.heartIcon{
+.heartIcon {
     height: 30px;
     width: 30px;
     padding: 5px;
+}
+
+.carousel-container{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.carousel-item {
+    height: 500px;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center!important;
+}
+
+.gradient-next {
+    background: linear-gradient(-90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 0, 0));
+}
+.gradient-previous {
+    background: linear-gradient(-90deg, rgba(255, 255, 255, 0), rgba(255, 255, 256, 0.6));
 }

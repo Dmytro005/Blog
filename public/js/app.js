@@ -252,7 +252,7 @@ app.directive("singIn", function () {
 
             var SingInStyles = $('[data-remodal-id=singIn]');
             var AlertSytles = $("#sing-in-alert");
-            
+
             $scope.CurentUser = {
                 name: "Guest"
             }
@@ -279,21 +279,21 @@ app.directive("singIn", function () {
 
                     /*Close modal*/
                     if (response.data.signed) {
-                        
+
                         AlertSytles.removeClass("alert-danger");
-                        
+
                         AlertSytles.addClass("alert-primary");
-                        
+
                         SingInStyles.addClass("alert-primary");
 
                         $scope.singInAlertMessage += " " + response.data.userLogin;
 
                         $scope.heartIcon = true;
-                        
+
                         setTimeout(function () {
 
                             $("[data-remodal-target= singIn]").addClass("d-none");
-                            
+
                             $("[data-remodal-target= singUp]").addClass("d-none");
 
                             SingInModal.close();
@@ -333,154 +333,9 @@ app.directive("slider", function () {
         replace: true,
         templateUrl: "template/slider.html",
         controller: function () {
-            $(function () {
-                var slideDelay = 4500;
-                var animDuration = 2000;
-
-                var currentSlide = 1;
-                var width = $("#slider").width();
-
-                var $slider = $("#slider");
-                var $sliderContainer = $slider.find("#sliderContainer");
-                var $slides = $sliderContainer.find(".slide");
-                var lastSlide = $slides.length;
-
-                var circleHTML = "";
-                var currentCircle;
-                var previousCircle;
-
-                var interval; // contains our interval playing
-
-                //---------------create circles    
-                for (var i = currentSlide; i <= lastSlide; i++) {
-                    circleHTML += '<div class="circle" slide-id="' + i + '"></div>';
-                }
-                //---------------paste circles    
-                $slider.append("<div class='bar'>" + circleHTML + "</div>");
-
-                //---------------check and activate circles
-                function circleActivate() {
-                    if (previousCircle !== undefined) {
-                        previousCircle.removeClass("active");
-                    }
-                    currentCircle = $(".circle[slide-id='" + currentSlide + "']");
-                    currentCircle.addClass("active");
-                    previousCircle = currentCircle;
-                }
-
-                //---------Upload Photo when it's need
-                function photoUpload() {
-                    let count = currentSlide + 1;
-                    $(".slide:nth-child(" + count + ")").css("background", "url(img/slides/" + count + ".jpg)");
-                }
-                //uppload first photo
-                $(".slide:nth-child(" + (currentSlide) + ")").css("background", "url(img/slides/" + (currentSlide) + ".jpg)");
-
-                //-----scroll to the current slide
-                function scrollToCurrent() {
-                    $("#sliderContainer").animate({ //scroll previous
-                        scrollLeft: width * currentSlide
-                    }, animDuration / 2);
-                }
-
-                //-----return slidet to first slide
-                function toFirstSlide() {
-                    if (currentSlide === lastSlide + 1) {
-                        currentSlide = 1;
-                        $("#sliderContainer").animate({
-                            scrollLeft: 0
-                        }, animDuration / 2);
-                    }
-                }
-
-                //------play slider
-                function play() {
-
-                    circleActivate();
-
-                    interval = setInterval(function () {
-                        nextSlide();
-                        //            console.log(currentSlide);
-                    }, slideDelay)
-                }
-
-                //------stop slider
-                function stop() {
-                    clearInterval(interval);
-                }
-
-                function nextSlide() {
-                    stop();
-
-                    photoUpload();
-
-                    ++currentSlide;
-
-                    circleActivate();
-
-                    $("#sliderContainer").animate({ //scroll previous
-                        scrollLeft: "+=" + width
-                    }, animDuration, "swing");
-
-                    if (currentSlide > lastSlide) {
-                        toFirstSlide();
-                    }
-                    play();
-                    // console.log(currentSlide);
-                }
-
-                function prevSlide() {
-                    stop();
-
-                    --currentSlide;
-
-                    circleActivate();
-
-                    $("#sliderContainer").animate({ //scroll to next
-                        scrollLeft: "-=" + width
-                    }, animDuration);
-
-                    if (currentSlide < 1) {
-                        currentSlide = 1;
-                        circleActivate();
-                    }
-                    play();
-                    //                    console.log(currentSlide);
-
-                }
-
-                //----circle click event handler
-                $(".circle").click(function () {
-
-                    stop(); //stop slider
-
-                    $("#sliderContainer").animate({ //scroll to certain block
-                        scrollLeft: width * ($(this).attr("slide-id") - 1)
-                    }, animDuration, "swing");
-
-                    currentSlide = $(this).attr("slide-id"); //change current slide
-
-                    photoUpload();
-
-                    circleActivate(); //activate properly circle
-
-                    play(); //play slider again
-                })
-
-                //----buttons previous and next event handler
-                $(".slider-btn").click(function () {
-                    if ($(this).attr("id") == "next") {
-                        nextSlide();
-                    } else {
-                        prevSlide();
-                    }
-                });
-
-                //-----activate autoplay
-                play();
-
-            });
-
+            $('.carousel').carousel({
+                interval: 4000
+            })
         }
     }
 });
