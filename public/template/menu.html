@@ -22,11 +22,19 @@
                     <button ng-if="mb.modal" data-remodal-target="{{mb.modal}}" class="{{mb.type}} my-btn" href="#">{{mb.name}}</button>
                 </li>
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-none" id="UserSettings" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{CurentUser}}</a>
+                    <div class="dropdown-menu dropdown-menu-right" >
+                        <a class="dropdown-item" href="#" ng-click="LogOut()">Log Out</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </li>
+
             </ul>
 
         </div>
     </div>
-        <span class="badge badge-pill badge-dark">{{CurentUser.name}}</span>
-
-
 </nav>

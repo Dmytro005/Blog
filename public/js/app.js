@@ -1,4 +1,4 @@
-var app = angular.module("app", ["ngAnimate", "ngRoute"] );
+var app = angular.module("app", ["ngAnimate", "ngRoute"]);
 
 //Забираєм %2F та # з url сайту
 app.config(['$locationProvider', function ($locationProvider) {
@@ -268,9 +268,21 @@ app.directive("singIn", function () {
             var SingInStyles = $('[data-remodal-id=singIn]');
             var AlertSytles = $("#sing-in-alert");
 
-            $scope.CurentUser = {
-                name: "Guest"
+            /*Local storage Auth*/
+            if (localStorage.userName == "undefined") {
+                localStorage.userName = "Guest";
+                $("#UserSettings").addClass("d-none");
+            } else {
+                if (localStorage.userName != "Guest") {
+                    $scope.CurentUser = localStorage.userName;
+
+                    $("[data-remodal-target= singIn]").addClass("d-none");
+
+                    $("[data-remodal-target= singUp]").addClass("d-none");
+                    $("#UserSettings").removeClass("d-none");
+                }
             }
+
             $scope.heartIcon = false;
 
 
@@ -310,6 +322,7 @@ app.directive("singIn", function () {
                             $("[data-remodal-target= singIn]").addClass("d-none");
 
                             $("[data-remodal-target= singUp]").addClass("d-none");
+                            $("#UserSettings").removeClass("d-none");
 
                             SingInModal.close();
 
@@ -320,16 +333,21 @@ app.directive("singIn", function () {
                     }
 
                     /*Change user name*/
-                    $scope.CurentUser.name = response.data.userLogin || "Guest";
+                    localStorage.userName = response.data.userLogin;
+                    $scope.CurentUser = localStorage.userName;
 
                 });
 
 
             }
 
-            $scope.logOut = function () {
-                $scope.CurentUser.name = "Guest";
+            $scope.LogOut = function () {
                 $scope.heartIcon = false;
+                $("[data-remodal-target= singIn]").removeClass("d-none");
+
+                $("[data-remodal-target= singUp]").removeClass("d-none");
+                $("#UserSettings").addClass("d-none");
+                localStorage.userName = "Guest";
             }
 
             //Disable remodal initialization on page load becuse of using directive
