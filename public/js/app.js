@@ -1,4 +1,19 @@
-var app = angular.module("app", ["ngAnimate"]);
+var app = angular.module("app", ["ngAnimate", "ngRoute"] );
+
+//Забираєм %2F та # з url сайту
+app.config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.hashPrefix('');
+    $locationProvider.html5Mode(true);
+}]);
+
+//Створюєм адреси
+app.config(function ($routeProvider) {
+    $routeProvider
+        .otherwise({
+            redirectTo: '/'
+        });
+
+});
 
 app.controller("myCtrl", function ($scope) {});
 

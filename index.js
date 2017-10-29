@@ -5,7 +5,7 @@ const app = express();
 const mysql = require("mysql");
 const PORT = 8000;
 
-
+/*Під'єднуємся до бази даних*/
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
