@@ -40,6 +40,10 @@ app.post("/post", function (req, res) {
     });
 });
 
+app.get("/userProfile", function(req, res){
+    
+})
+
 app.post("/sendMessage", function (req, res) {
     console.log(req.body);
     res.status(200).send("Form has been sent successfully");

@@ -1,50 +1,49 @@
 <div class="remodal my-modal" data-remodal-id="singIn">
-        <div class="container justify-content-center">
-            <div class="alert alert-danger w-100 text-center" ng-show="singInAlert" id="sing-in-alert">
-                {{singInAlertMessage}}
-            </div>
+    <div class="container justify-content-center">
+        <div class="alert alert-danger w-100 text-center" ng-show="singInAlert" id="sing-in-alert">
+            {{singInAlertMessage}}
         </div>
-
-        <form name="singIn" novalidate ng-show="singInForm">
-        <h2>Sing In</h2>
-<!--            SingInLogin input-->
-                <div class="form-group">
-
-                <label for="example-text-input" class="col-form-label">Login name</label>
-
-
-                <input class="form-control" type="text" name="SingInLogin" ng-model="SingInLogin" placeholder="John" required>
-
-
-                <span ng-show="singIn.SingInLogin.$touched && singIn.SingInLogin.$invalid">
-                        
-            <span class="badge alert-danger w-100" ng-show="singIn.SingInLogin.$error.required" >Login  is required</span>
-                </span>
-
-
-            </div>
-<!--            SingInPassword-->
-<div class="form-group">
-                <label for="SingInPass">SingInPassword</label>
-
-                <input type="SingInPassword" class="form-control" placeholder="Enter password" ng-model="SingInPass" name="SingInPass" required>
-
-                <span ng-show="singIn.SingInPass.$touched && singIn.SingInPass.$invalid">
-                        
-            <span class="badge alert-danger w-100" ng-show="singIn.SingInPass.$error.required">Invalid email</span>
-                </span>
-            </div>
-<!--Butons-->
-           
-            <div class="row">
-                <div class="col-6">
-            <button data-remodal-action="cancel" class="btn btn-outline-danger w-100">Cancel</button>
-                    
-                </div>
-                <div class="col-6">
-            <button type="button" class="btn btn-primary w-100" ng-disabled="singIn.$invalid" ng-click="singInUser()" ng-model="singInForm">Sing In</button>
-                </div>
-            </div>
-        </form>
     </div>
 
+    <form name="singIn" novalidate ng-show="singInForm">
+        <h2>Sing In</h2>
+        <!--            SingInLogin input-->
+        <div class="form-group">
+
+            <label for="example-text-input" class="col-form-label">Login name</label>
+
+
+            <input class="form-control" type="text" name="SingInLogin" ng-model="SingInLogin" placeholder="John" required>
+
+
+            <span ng-show="singIn.SingInLogin.$touched && singIn.SingInLogin.$invalid">
+                        
+            <span class="badge alert-danger w-100" ng-show="singIn.SingInLogin.$error.required" >Login  is required</span>
+            </span>
+
+
+        </div>
+        <!--            SingInPassword-->
+        <div class="form-group">
+            <label for="SingInPass">SingInPassword</label>
+
+            <input type="SingInPassword" class="form-control" placeholder="Enter password" ng-model="SingInPass" name="SingInPass" required>
+
+            <span ng-show="singIn.SingInPass.$touched && singIn.SingInPass.$invalid">
+                        
+            <span class="badge alert-danger w-100" ng-show="singIn.SingInPass.$error.required">Invalid email</span>
+            </span>
+        </div>
+        <!--Butons-->
+
+        <div class="row">
+            <div class="col-6">
+                <button data-remodal-action="cancel" class="btn btn-outline-danger w-100">Cancel</button>
+
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-primary w-100" ng-disabled="singIn.$invalid" ng-click="singInUser()" ng-model="singInForm">Sing In</button>
+            </div>
+        </div>
+    </form>
+</div>

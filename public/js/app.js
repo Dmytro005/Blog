@@ -67,6 +67,10 @@ app.directive("header", function () {
                     /*For triggering hide and show with other pages*/
                     name: "PostPage",
                     type: "d-none",
+                },
+                {
+                    name: "Profile",
+                    type: "d-none"
                 }
 
 
@@ -285,24 +289,21 @@ app.directive("singIn", function () {
 
             $scope.heartIcon = false;
 
-
             $scope.singInUser = function () {
+
                 let Obj = {
                     login: $scope.SingInLogin,
                     password: $scope.SingInPass
                 }
-
-                $scope.singInForm = false;
+                
+                AlertSytles.addClass("alert-danger");
+                
+                /*Enable form and alert*/
+                $scope.singInForm = true;
                 $scope.singInAlert = true;
 
-
                 $http.post("http://localhost:8000/singIn", Obj).then(function successfullCallBack(response) {
-                    /*Change styles and close*/
-                    //                    SingInStyles.addClass("alert alert-danger");
-
                     $scope.singInAlertMessage = response.data.message;
-
-                    //                    console.log(response.data.userLogin)
 
                     /*Close modal*/
                     if (response.data.signed) {
@@ -317,10 +318,13 @@ app.directive("singIn", function () {
 
                         $scope.heartIcon = true;
 
+                        $scope.singInForm = false;
+                        $scope.singInAlert = true;
+
                         setTimeout(function () {
 
-                            $("[data-remodal-target= singIn]").addClass("d-none");
 
+                            $("[data-remodal-target= singIn]").addClass("d-none");
                             $("[data-remodal-target= singUp]").addClass("d-none");
                             $("#UserSettings").removeClass("d-none");
 
@@ -348,6 +352,17 @@ app.directive("singIn", function () {
                 $("[data-remodal-target= singUp]").removeClass("d-none");
                 $("#UserSettings").addClass("d-none");
                 localStorage.userName = "Guest";
+
+                /*Enable form and alert*/
+                $scope.singInForm = true;
+                $scope.singInAlert = false;
+
+                /*Remove classes*/
+                AlertSytles.removeClass("alert-primary");
+
+                SingInStyles.removeClass("alert-primary");
+                
+
             }
 
             //Disable remodal initialization on page load becuse of using directive
@@ -356,6 +371,21 @@ app.directive("singIn", function () {
             });
 
 
+        }
+    }
+});
+
+app.directive("userProfile", function () {
+    return {
+        replace: true,
+        templateUrl: "template/pages/user-profile.html",
+        controller: function ($scope, $http) {
+            //            
+            //               $http.post("http://localhost:8000/userProfile", Obj)
+            //                   .then(function successfullCallBack(response) {
+            //                    
+            //               }
+            //        }
         }
     }
 });
