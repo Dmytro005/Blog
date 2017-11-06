@@ -108,11 +108,15 @@ app.post("/userProfile", function (req, res) {
     //    console.log(req.body);
     connection.query("SELECT * FROM users WHERE login = ? ", req.body.login, function (err, rows) {
         if (err) throw err;
+        
+        let password = rows[0].password;
 
         connection.query("SELECT * FROM users_info WHERE user_id = ? ", rows[0].id, function (err, rows) {
 
             if (err) throw err;
-
+            
+            rows[0].password = password;
+            
             res.status(200).send(rows[0]);
         });
     })

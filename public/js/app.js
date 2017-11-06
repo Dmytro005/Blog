@@ -411,7 +411,15 @@ app.directive("userProfile", function () {
                 }
                 
                 $http.post('http://localhost:8000/userProfile', Obj).then(function successfullCallBack(response) {
-                            console.log(response.data);
+                    
+                        console.log(response.data);
+                    
+                        $scope.CurentUser = response.data.name;
+                        $scope.UserNameSname = response.data.sname;
+                        $scope.UserContacts = response.data.contacts;
+                        $scope.UserInfo = response.data.info;
+                        $scope.CurentUserPass = response.data.password;
+                    
                 });
 
             }
