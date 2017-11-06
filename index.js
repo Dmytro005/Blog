@@ -5,6 +5,25 @@ const app = express();
 const mysql = require("mysql");
 const PORT = 8000;
 
+const multer = require("multer");
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cd) {
+        cd(null, 'public/img/')
+    },
+    filename: function (req, file, cd) {
+        cd(null, fieldname);
+    }
+});
+
+var upload = multer({
+    storage: storage
+});
+
+app.post("/images", upload.any(), function (req, res, next) {
+    res.sendStatus(200);
+});
+
 /*Під'єднуємся до бази даних*/
 const connection = mysql.createConnection({
     host: "localhost",
@@ -40,10 +59,6 @@ app.post("/post", function (req, res) {
     });
 });
 
-app.get("/userProfile", function(req, res){
-    
-})
-
 app.post("/sendMessage", function (req, res) {
     console.log(req.body);
     res.status(200).send("Form has been sent successfully");
@@ -67,19 +82,17 @@ app.post("/singIn", function (req, res) {
         if (rows[0] != undefined) {
 
             if (rows[0].password == req.body.password) {
-                res.status(200).send(
-                    {
+                res.status(200).send({
                     message: "Welcome",
                     userLogin: rows[0].login,
                     userId: rows[0].password,
                     userInfo: rows[0].info,
                     signed: true
-                    }
-                );
+                });
             } else {
-                res.status(200).send(
-                    {
-                    message: "Wrong password"});
+                res.status(200).send({
+                    message: "Wrong password"
+                });
             }
 
         } else {
@@ -91,6 +104,19 @@ app.post("/singIn", function (req, res) {
     });
 });
 
+app.post("/userProfile", function (req, res) {
+    //    console.log(req.body);
+    connection.query("SELECT * FROM users WHERE login = ? ", req.body.login, function (err, rows) {
+        if (err) throw err;
+
+        connection.query("SELECT * FROM users_info WHERE user_id = ? ", rows[0].id, function (err, rows) {
+
+            if (err) throw err;
+
+            res.status(200).send(rows[0]);
+        });
+    })
+});
 
 //Усі адреси контролюються клієнтським ангуляром
 app.get("*", function (req, res) {

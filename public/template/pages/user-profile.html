@@ -1,7 +1,15 @@
 <div class="container" ng-show="profile">
-    <div class="row">
-        <div class="col-10">
-            <p>Your data</p>
+    <div class="row ">
+       <div class="col-4">
+           <img src="http://via.placeholder.com/350x350" class="w-100" alt="">
+       </div>
+        <div class="col-8 text-center">
+            <p>Login : {{CurentUser}}</p>
+            <p>Password: {{CurentUserPass}}</p>
+            <hr>
+            <p>Name and Surname: {{UserNameSname}}</p>
+            <p>Contacts: {{UserContacts}}</p>
+            <p>Info: {{UserInfo}}</p>
         </div>
     </div>
 </div>

@@ -33,7 +33,6 @@ app.directive("header", function () {
                 {
                     name: "Home",
                     action: function () {
-
                         $scope.pageSwitch(this.name);
                     },
                     type: "nav-link"
@@ -101,7 +100,7 @@ app.directive("header", function () {
             //--header visuals add padding because header is fixed
 
             var height = $("#nav-menu").height();
-            $("body").css("padding-top", height * 1.1);
+            $("body").css("padding-top", height * 1.25);
 
 
 
@@ -137,6 +136,24 @@ app.directive("blogPage", function () {
                 .then(function successCallBack(response) {
                     $scope.posts = response.data;
                 });
+
+            $scope.upload = function () {
+
+                var fd = new FormData();
+                fd.append("1", $scope.myFile);
+                $http.post("http://localhost:8000/images", fd, {
+                        transformRequest: angular.identity,
+                        headers: {
+                            'Content-Type': undefined
+                        }
+                    })
+                    .then(function successCallBack() {
+                        console.log("Uploaded");
+                    }, function errorCallBack(response) {
+                        console.log("Error!!!" + response.err);
+                    })
+            }
+
         }
     }
 });
@@ -291,13 +308,13 @@ app.directive("singIn", function () {
 
             $scope.singInUser = function () {
 
-                let Obj = {
+                var Obj = {
                     login: $scope.SingInLogin,
                     password: $scope.SingInPass
                 }
-                
+
                 AlertSytles.addClass("alert-danger");
-                
+
                 /*Enable form and alert*/
                 $scope.singInForm = true;
                 $scope.singInAlert = true;
@@ -320,6 +337,10 @@ app.directive("singIn", function () {
 
                         $scope.singInForm = false;
                         $scope.singInAlert = true;
+
+                        $http.post('http://localhost:8000/userProfile', Obj).then(function successfullCallBack(response) {
+                            console.log(response.data);
+                        })
 
                         setTimeout(function () {
 
@@ -346,6 +367,9 @@ app.directive("singIn", function () {
             }
 
             $scope.LogOut = function () {
+
+                $scope.pageSwitch('Home');
+
                 $scope.heartIcon = false;
                 $("[data-remodal-target= singIn]").removeClass("d-none");
 
@@ -361,7 +385,6 @@ app.directive("singIn", function () {
                 AlertSytles.removeClass("alert-primary");
 
                 SingInStyles.removeClass("alert-primary");
-                
 
             }
 
@@ -380,12 +403,18 @@ app.directive("userProfile", function () {
         replace: true,
         templateUrl: "template/pages/user-profile.html",
         controller: function ($scope, $http) {
-            //            
-            //               $http.post("http://localhost:8000/userProfile", Obj)
-            //                   .then(function successfullCallBack(response) {
-            //                    
-            //               }
-            //        }
+            $scope.currentUser = "Dima"
+            if (localStorage.userName != undefined) {
+                
+                let Obj = {
+                    login: localStorage.userName
+                }
+                
+                $http.post('http://localhost:8000/userProfile', Obj).then(function successfullCallBack(response) {
+                            console.log(response.data);
+                });
+
+            }
         }
     }
 });
@@ -402,3 +431,21 @@ app.directive("slider", function () {
         }
     }
 });
+
+/*Директива з унікальним атрибутом для передачі файлів
+ */
+
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            element.bind('change', function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files);
+                });
+            });
+        }
+    };
+}]);
