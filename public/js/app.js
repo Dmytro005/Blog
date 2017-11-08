@@ -404,22 +404,35 @@ app.directive("userProfile", function () {
         templateUrl: "template/pages/user-profile.html",
         controller: function ($scope, $http) {
             $scope.currentUser = "Dima"
-            if (localStorage.userName != undefined) {
-                
+            if (localStorage.userName != "Guest") {
+
                 let Obj = {
                     login: localStorage.userName
                 }
-                
+
                 $http.post('http://localhost:8000/userProfile', Obj).then(function successfullCallBack(response) {
-                    
-                        console.log(response.data);
-                    
+                    $scope.BuildUserProfile = function () {
                         $scope.CurentUser = response.data.name;
                         $scope.UserNameSname = response.data.sname;
                         $scope.UserContacts = response.data.contacts;
                         $scope.UserInfo = response.data.info;
                         $scope.CurentUserPass = response.data.password;
+
+                    }
+                    //                        console.log(response.data);
                     
+                    $scope.BuildUserProfile();
+
+                    //button for changing user name and password
+                    $scope.changeUserData = function () {
+                        console.log("changeUserData");
+                    }
+
+                    //button for changing user information
+                    $scope.changeUserInfo = function () {
+                        console.log("changeUserInfo");
+                    }
+
                 });
 
             }

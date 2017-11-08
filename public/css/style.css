@@ -166,13 +166,13 @@ body {
     padding: 5px;
 }
 
-.carousel-container{
+.carousel-container {
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
     display: -o-flex;
     display: flex;
-    
+
     justify-content: center;
     flex-direction: column;
     align-items: center;
@@ -190,6 +190,21 @@ body {
 .gradient-next {
     background: linear-gradient(-90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 0, 0));
 }
+
 .gradient-previous {
     background: linear-gradient(-90deg, rgba(255, 255, 255, 0), rgba(255, 255, 256, 0.6));
+}
+
+.edit-icon {
+    width: 20px;
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    cursor: pointer;
+    filter: opacity(0.5);
+    transition: all 0.5s ease-in-out;
+}
+
+.edit-icon:hover{
+    filter: opacity(1);
 }
