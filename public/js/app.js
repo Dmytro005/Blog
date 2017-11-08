@@ -1,4 +1,4 @@
-var app = angular.module("app", ["ngAnimate", "ngRoute"]);
+var app = angular.module("app", ["ngAnimate", "ngRoute", "ngDialog"]);
 
 //Забираєм %2F та # з url сайту
 app.config(['$locationProvider', function ($locationProvider) {
@@ -402,7 +402,7 @@ app.directive("userProfile", function () {
     return {
         replace: true,
         templateUrl: "template/pages/user-profile.html",
-        controller: function ($scope, $http) {
+        controller: function ($scope, $http, ngDialog) {
             $scope.currentUser = "Dima"
             if (localStorage.userName != "Guest") {
 
@@ -420,12 +420,16 @@ app.directive("userProfile", function () {
 
                     }
                     //                        console.log(response.data);
-                    
+
                     $scope.BuildUserProfile();
 
                     //button for changing user name and password
                     $scope.changeUserData = function () {
-                        console.log("changeUserData");
+
+                        ngDialog.open({
+                            template: '<p>my template</p>',
+                            plain: true
+                        });
                     }
 
                     //button for changing user information
